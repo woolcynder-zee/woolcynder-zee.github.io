@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=5.0,
+user-scalable=yes">
+
+<title id="pageTitle">
+Loading...
+</title>
+
+<link href="
+https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:wght@300;400;500;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+:root{
+
+--blue:#00b4ff;
+--blue-dark:#0070cc;
+--blue-glow:rgba(0,180,255,.35);
+
+--bg:#080b12;
+--surface:#0e1220;
+--surface2:#141826;
+
+--border:rgba(255,255,255,.07);
+
+--text:#f0f0f0;
+--muted:#7a8099;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:var(--bg);
+
+color:var(--text);
+
+font-family:'DM Sans',sans-serif;
+
+overflow-x:hidden;
+
+}
+
+/* NOISE */
+
+body::before{
+
+content:'';
+
+position:fixed;
+
+inset:0;
+
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+
+pointer-events:none;
+
+opacity:.4;
+
+z-index:0;
+
+}
+
+/* CONTAINER */
+
+.container{
+
+max-width:480px;
+
+margin:auto;
+
+min-height:100vh;
+
+position:relative;
+
+z-index:1;
+
+}
+
+/* HEADER */
+
+.header{
+
+padding:14px 18px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+background:rgba(8,11,18,.96);
+
+border-bottom:1px solid var(--border);
+
+position:sticky;
+
+top:0;
+
+z-index:100;
+
+}
+
+.logo{
+
+font-family:'Rajdhani',sans-serif;
+
+font-size:26px;
+
+font-weight:700;
+
+letter-spacing:3px;
+
+color:var(--blue);
+
+text-shadow:
+0 0 18px var(--blue-glow);
+
+}
+
+.logo span{
+
+font-size:12px;
+
+color:white;
+
+opacity:.55;
+
+margin-left:6px;
+
+letter-spacing:1px;
+
+}
+
+.menu{
+
+display:flex;
+
+gap:6px;
+
+}
+
+.menu a{
+
+color:var(--muted);
+
+text-decoration:none;
+
+font-size:11px;
+
+padding:6px 12px;
+
+border-radius:8px;
+
+transition:.25s;
+
+}
+
+.menu a.active{
+
+background:var(--blue);
+
+color:white;
+
+box-shadow:
+0 0 14px var(--blue-glow);
+
+}
+
+/* LIVE BAR */
+
+.live-bar{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:8px 18px;
+
+background:rgba(0,180,255,.06);
+
+border-bottom:1px solid rgba(0,180,255,.1);
+
+font-size:11px;
+
+color:var(--muted);
+
+}
+
+.live-dot{
+
+width:7px;
+height:7px;
+
+background:#2dff7e;
+
+border-radius:50%;
+
+box-shadow:
+0 0 8px #2dff7e;
+
+animation:pulse 1.5s infinite;
+
+}
+
+@keyframes pulse{
+
+0%,100%{
+opacity:1;
+transform:scale(1);
+}
+
+50%{
+opacity:.5;
+transform:scale(1.3);
+}
+
+}
+
+/* SLIDER */
+
+.slider-wrapper{
+
+position:relative;
+
+overflow:hidden;
+
+margin:16px;
+
+border-radius:20px;
+
+box-shadow:
+
+0 0 0 1px var(--border),
+
+0 8px 40px rgba(0,0,0,.6),
+
+0 0 60px rgba(0,180,255,.08);
+
+}
+
+.slider{
+
+display:flex;
+
+transition:transform .28s ease;
+
+will-change:transform;
+
+transform:translateZ(0);
+
+}
+
+.slide{
+
+min-width:100%;
+
+}
+
+.slide img{
+
+width:100%;
+
+display:block;
+
+max-height:520px;
+
+object-fit:contain;
+
+background:#0b0f18;
+
+border-radius:20px;
+
+transform:translateZ(0);
+
+backface-visibility:hidden;
+
+will-change:transform;
+
+}
+
+/* COUNTER */
+
+.slide-count{
+
+position:absolute;
+
+bottom:12px;
+right:14px;
+
+background:rgba(0,0,0,.65);
+
+padding:4px 10px;
+
+border-radius:20px;
+
+font-size:11px;
+
+font-weight:600;
+
+}
+
+/* ARROW */
+
+.arrow{
+
+position:absolute;
+
+top:50%;
+
+transform:translateY(-50%);
+
+width:34px;
+height:34px;
+
+border:none;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.55);
+
+color:white;
+
+cursor:pointer;
+
+z-index:10;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.left{
+left:12px;
+}
+
+.right{
+right:12px;
+}
+
+/* DOTS */
+
+.dots{
+
+display:flex;
+
+justify-content:center;
+
+gap:6px;
+
+margin:10px 0 4px;
+
+}
+
+.dot{
+
+width:6px;
+height:6px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.18);
+
+transition:.3s;
+
+cursor:pointer;
+
+}
+
+.dot.active{
+
+width:22px;
+
+background:var(--blue);
+
+box-shadow:
+0 0 8px var(--blue-glow);
+
+}
+
+/* CONTENT */
+
+.content{
+
+padding:18px 16px 32px;
+
+}
+
+/* BADGES */
+
+.badges{
+
+display:flex;
+
+gap:8px;
+
+margin-bottom:16px;
+
+flex-wrap:wrap;
+
+}
+
+.badge{
+
+padding:5px 12px;
+
+border-radius:8px;
+
+font-size:11px;
+
+font-weight:600;
+
+}
+
+.badge-green{
+
+background:rgba(45,255,126,.1);
+
+color:#2dff7e;
+
+border:1px solid rgba(45,255,126,.25);
+
+}
+
+.badge-gold{
+
+background:rgba(255,196,0,.1);
+
+color:#ffc400;
+
+border:1px solid rgba(255,196,0,.25);
+
+}
+
+/* TITLE */
+
+.title{
+
+font-family:'Rajdhani',sans-serif;
+
+font-size:30px;
+
+font-weight:700;
+
+letter-spacing:2px;
+
+margin-bottom:4px;
+
+}
+
+.subtitle{
+
+font-size:13px;
+
+color:var(--muted);
+
+margin-bottom:14px;
+
+}
+
+/* PRICE */
+
+.price-block{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+margin-bottom:20px;
+
+flex-wrap:wrap;
+
+}
+
+.price{
+
+font-family:'Rajdhani',sans-serif;
+
+font-size:34px;
+
+font-weight:700;
+
+color:var(--blue);
+
+text-shadow:
+0 0 20px var(--blue-glow);
+
+}
+
+.price-old{
+
+font-size:15px;
+
+color:var(--muted);
+
+text-decoration:line-through;
+
+}
+
+/* STATS */
+
+.stats-row{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:10px;
+
+margin-bottom:16px;
+
+}
+
+.stat-card{
+
+background:var(--surface);
+
+border:1px solid var(--border);
+
+border-radius:14px;
+
+padding:14px 10px;
+
+text-align:center;
+
+}
+
+.stat-icon{
+
+font-size:20px;
+
+margin-bottom:5px;
+
+}
+
+.stat-value{
+
+font-family:'Rajdhani',sans-serif;
+
+font-size:16px;
+
+font-weight:700;
+
+}
+
+.stat-label{
+
+font-size:10px;
+
+color:var(--muted);
+
+margin-top:2px;
+
+}
+
+/* DIVIDER */
+
+.divider{
+
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+var(--border),
+transparent
+);
+
+margin:18px 0;
+
+}
+
+/* DETAIL */
+
+.detail-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+}
+
+.detail-card{
+
+background:var(--surface);
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+padding:16px;
+
+}
+
+.detail-card-title{
+
+font-size:10px;
+
+font-weight:700;
+
+letter-spacing:1.5px;
+
+color:var(--blue);
+
+margin-bottom:10px;
+
+}
+
+.detail-list{
+
+list-style:none;
+
+display:flex;
+
+flex-direction:column;
+
+gap:7px;
+
+}
+
+.detail-list li{
+
+font-size:12.5px;
+
+color:#c8cce0;
+
+line-height:1.4;
+
+}
+
+/* GUARANTEE */
+
+.guarantee{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:8px;
+
+margin:16px 0;
+
+}
+
+.guarantee-item{
+
+background:var(--surface);
+
+border:1px solid var(--border);
+
+border-radius:12px;
+
+padding:12px 8px;
+
+text-align:center;
+
+}
+
+.guarantee-icon{
+
+font-size:18px;
+
+margin-bottom:4px;
+
+}
+
+.guarantee-label{
+
+font-size:10px;
+
+color:var(--muted);
+
+}
+
+/* BUTTON */
+
+.wa-btn{
+
+display:block;
+
+width:100%;
+
+padding:16px;
+
+border-radius:16px;
+
+text-align:center;
+
+text-decoration:none;
+
+background:
+linear-gradient(
+135deg,
+var(--blue),
+var(--blue-dark)
+);
+
+color:white;
+
+font-family:'Rajdhani',sans-serif;
+
+font-size:18px;
+
+font-weight:700;
+
+letter-spacing:2px;
+
+box-shadow:
+0 6px 30px rgba(0,180,255,.35);
+
+}
+
+.wa-btn-sub{
+
+font-size:11px;
+
+opacity:.8;
+
+margin-top:2px;
+
+}
+
+/* FOOTER */
+
+.footer{
+
+text-align:center;
+
+padding:20px 16px;
+
+border-top:1px solid var(--border);
+
+color:var(--muted);
+
+font-size:11px;
+
+line-height:1.8;
+
+}
+
+/* MODAL */
+
+.image-modal{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.94);
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+z-index:9999;
+
+}
+
+.image-modal.show{
+
+display:flex;
+
+}
+
+.image-modal img{
+
+width:100%;
+
+max-width:520px;
+
+border-radius:18px;
+
+}
+
+.close-btn{
+
+position:absolute;
+
+top:20px;
+right:20px;
+
+width:36px;
+height:36px;
+
+border:none;
+
+border-radius:50%;
+
+background:var(--blue);
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+/* TOAST */
+
+.toast{
+
+position:fixed;
+
+bottom:24px;
+
+left:50%;
+
+transform:
+translateX(-50%)
+translateY(60px);
+
+background:var(--surface2);
+
+padding:10px 20px;
+
+border-radius:12px;
+
+font-size:12px;
+
+color:#2dff7e;
+
+transition:.35s;
+
+z-index:10000;
+
+}
+
+.toast.show{
+
+transform:
+translateX(-50%)
+translateY(0);
+
+}
+
+*{
+-webkit-tap-highlight-color:transparent;
+}
+
+.slider,
+.slide,
+.slide img{
+touch-action:pan-y;
+}
+
+img{
+image-rendering:auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div class="logo"
+id="logoToko">
+Loading
+</div>
+
+<div class="menu">
+
+<a href="#"
+class="active">
+SPEK
+</a>
+
+<a id="menuStok"
+href="#"
+target="_blank">
+
+STOK & TESTI
+
+</a>
+
+</div>
+
+</div>
+
+<div class="live-bar">
+
+<div class="live-dot"></div>
+
+<span id="liveBarText">
+Loading...
+</span>
+
+</div>
+
+<div class="slider-wrapper">
+
+<button
+class="arrow left"
+onclick="prevSlide()">
+
+❮
+
+</button>
+
+<div class="slider"
+id="slider">
+</div>
+
+<button
+class="arrow right"
+onclick="nextSlide()">
+
+❯
+
+</button>
+
+<div class="slide-count"
+id="slideCount">
+0 / 0
+</div>
+
+</div>
+
+<div class="dots"
+id="dots">
+</div>
+
+<div class="content">
+
+<div class="badges"
+id="badgesEl">
+</div>
+
+<div class="title"
+id="titleEl">
+Loading...
+</div>
+
+<div class="subtitle"
+id="subtitleEl">
+Loading...
+</div>
+
+<div class="price-block"
+id="priceBlockEl">
+</div>
+
+<div class="stats-row"
+id="statsRowEl">
+</div>
+
+<div class="divider"></div>
+
+<div class="detail-grid"
+id="detailGridEl">
+</div>
+
+<div class="guarantee"
+id="guaranteeEl">
+</div>
+
+<div class="divider"></div>
+
+<a
+id="waBtn"
+class="wa-btn"
+href="#"
+target="_blank">
+
+💬 CHAT WHATSAPP
+
+<div class="wa-btn-sub">
+Fast Respon
+</div>
+
+</a>
+
+</div>
+
+<div class="footer">
+
+© 2026
+<strong id="footerToko">
+Loading
+</strong>
+
+<br>
+
+<span id="footerSub">
+Loading...
+</span>
+
+</div>
+
+</div>
+
+<!-- MODAL -->
+
+<div
+id="imageModal"
+class="image-modal"
+onclick="handleModalClick(event)">
+
+<button
+class="close-btn"
+onclick="closeImage()">
+
+✕
+
+</button>
+
+<img
+id="modalImg"
+src=""
+alt="Preview">
+
+</div>
+
+<!-- TOAST -->
+
+<div
+id="toast"
+class="toast">
+</div>
+
+<script>
+
+const API_URL =
+"database.json";
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const productId =
+params.get("id");
+
+/* ELEMENT */
+
+const slider =
+document.getElementById("slider");
+
+const dots =
+document.getElementById("dots");
+
+const countEl =
+document.getElementById("slideCount");
+
+let index = 0;
+let total = 0;
+let autoPlay;
+
+/* FETCH */
+
+fetch(API_URL)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+const item =
+data.find(
+p=>p.id == productId
+);
+
+if(!item){
+
+document.body.innerHTML = `
+
+<div style="
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+font-family:sans-serif;
+">
+
+Produk tidak ditemukan
+
+</div>
+
+`;
+
+return;
+
+}
+
+/* PAGE */
+
+document.title =
+item.nama || "Produk";
+
+document.getElementById(
+"pageTitle"
+).textContent =
+item.nama || "Produk";
+
+/* LOGO */
+
+document.getElementById(
+"logoToko"
+).innerHTML = `
+
+${item.toko || "dikivermeil"}
+
+<span>
+${item.toko_sub || ".id"}
+</span>
+
+`;
+
+/* LIVE */
+
+document.getElementById(
+"liveBarText"
+).innerHTML =
+
+item.status === "SOLD"
+
+?
+
+"<strong style='color:#ff4d4d'>SOLD OUT</strong> — Produk sudah terjual ❌"
+
+:
+
+(item.livebar ||
+
+"<strong>READY STOCK</strong> — Gas Beli 🔥");
+
+/* MENU */
+
+document.getElementById(
+"menuStok"
+).href ="https://whatsapp.com/channel/0029Vb5Wqvk4yltHri6LRd2S" ;
+
+/* BADGE */
+
+document.getElementById(
+"badgesEl"
+).innerHTML = `
+
+<span class="
+badge
+${item.status === 'SOLD'
+? 'badge-gold'
+: 'badge-green'}
+">
+
+${item.status === 'SOLD'
+? '❌ SOLD OUT'
+: '✅ READY STOCK'}
+
+</span>
+
+`;
+
+/* TITLE */
+
+document.getElementById(
+"titleEl"
+).textContent =
+item.nama || "-";
+
+document.getElementById(
+"subtitleEl"
+).textContent =
+item.subtitle || "-";
+
+/* PRICE */
+
+document.getElementById(
+"priceBlockEl"
+).innerHTML = `
+
+<div class="price">
+
+Rp ${Number(
+item.harga_baru || 0
+).toLocaleString("id-ID")}
+
+</div>
+
+${
+item.harga_lama
+?
+
+`<div class="price-old">
+
+Rp ${Number(
+item.harga_lama
+).toLocaleString("id-ID")}
+
+</div>`
+
+:
+
+""
+
+}
+
+`;
+
+/* STATS */
+
+document.getElementById(
+"statsRowEl"
+).innerHTML = `
+
+<div class="stat-card">
+
+<div class="stat-icon">
+🎮
+</div>
+
+<div class="stat-value">
+${item.stat1_nama || "-"}
+</div>
+
+<div class="stat-label">
+${item.stat1_value || "-"}
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+⚔️
+</div>
+
+<div class="stat-value">
+${item.stat2_nama || "-"}
+</div>
+
+<div class="stat-label">
+${item.stat2_value || "-"}
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">
+🏆
+</div>
+
+<div class="stat-value">
+${item.stat3_nama || "-"}
+</div>
+
+<div class="stat-label">
+${item.stat3_value || "-"}
+</div>
+
+</div>
+
+`;
+
+/* DETAIL */
+
+document.getElementById(
+"detailGridEl"
+).innerHTML = `
+
+<div class="detail-card">
+
+<div class="detail-card-title">
+📊 INFO AKUN
+</div>
+
+<ul class="detail-list">
+
+<li>${item.info1 || "-"}</li>
+<li>${item.info2 || "-"}</li>
+<li>${item.info3 || "-"}</li>
+<li>${item.info4 || "-"}</li>
+
+</ul>
+
+</div>
+
+<div class="detail-card">
+
+<div class="detail-card-title">
+⚠️ KETERANGAN
+</div>
+
+<ul class="detail-list">
+
+<li>${item.ket1 || "-"}</li>
+<li>${item.ket2 || "-"}</li>
+<li>${item.ket3 || "-"}</li>
+<li>${item.ket4 || "-"}</li>
+
+</ul>
+
+</div>
+
+`;
+
+/* FOOTER */
+
+document.getElementById(
+"footerToko"
+).textContent =
+
+(item.toko || "dikivermeil") +
+
+" " +
+
+(item.toko_sub || ".id");
+
+document.getElementById(
+"footerSub"
+).innerHTML =
+
+item.footer ||
+
+"Store terpercaya";
+
+/* WHATSAPP */
+
+document.getElementById(
+"waBtn"
+).href =
+
+"https://wa.me/" +
+
+(item.whatsapp || "");
+
+/* IMAGES */
+
+const images = [];
+
+for(let i=1;i<=10;i++){
+
+const img =
+item["gambar"+i];
+
+if(img && img.trim() !== ""){
+
+images.push(img);
+
+}
+
+}
+
+/* SLIDES */
+
+slider.innerHTML = "";
+
+images.forEach((src,i)=>{
+
+slider.innerHTML += `
+
+<div class="slide">
+
+<img
+src="${src}"
+onclick="openImage('${src}')">
+
+</div>
+
+`;
+
+});
+
+/* DOTS */
+
+dots.innerHTML = "";
+
+images.forEach((_,i)=>{
+
+dots.innerHTML += `
+
+<div
+class="dot
+${i===0?'active':''}"
+onclick="goSlide(${i})">
+</div>
+
+`;
+
+});
+
+total = images.length;
+
+updateSlider();
+
+startAuto();
+
+})
+
+.catch(err=>{
+
+console.log(err);
+
+document.body.innerHTML = `
+
+<div style="
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:sans-serif;
+color:red;
+">
+
+Gagal mengambil data API
+
+</div>
+
+`;
+
+});
+
+/* SLIDER */
+
+function updateSlider(){
+
+slider.style.transform =
+`translateX(-${index*100}%)`;
+
+document
+.querySelectorAll(".dot")
+.forEach((dot,i)=>{
+
+dot.classList.toggle(
+"active",
+i===index
+);
+
+});
+
+countEl.textContent =
+`${index+1} / ${total}`;
+
+}
+
+function nextSlide(){
+
+index =
+(index+1)%total;
+
+updateSlider();
+
+}
+
+function prevSlide(){
+
+index =
+(index-1+total)%total;
+
+updateSlider();
+
+}
+
+function goSlide(i){
+
+index = i;
+
+updateSlider();
+
+}
+
+function startAuto(){
+
+clearInterval(autoPlay);
+
+autoPlay =
+setInterval(
+nextSlide,
+4500
+);
+
+}
+
+/* MODAL */
+
+function openImage(src){
+
+document.getElementById(
+"modalImg"
+).src = src;
+
+document.getElementById(
+"imageModal"
+).classList.add("show");
+
+document.body.style.overflow =
+"hidden";
+
+}
+
+function closeImage(){
+
+document.getElementById(
+"imageModal"
+).classList.remove("show");
+
+document.body.style.overflow =
+"";
+
+}
+
+function handleModalClick(e){
+
+if(
+e.target.id ===
+"imageModal"
+){
+
+closeImage();
+
+}
+
+}
+
+/* TOAST */
+
+document.getElementById(
+"waBtn"
+).addEventListener(
+"click",
+()=>{
+
+const toast =
+document.getElementById(
+"toast"
+);
+
+toast.textContent =
+"✅ Membuka WhatsApp...";
+
+toast.classList.add(
+"show"
+);
+
+setTimeout(()=>{
+
+toast.classList.remove(
+"show"
+);
+
+},2500);
+
+}
+);
+
+</script>
+
+</body>
+</html>
