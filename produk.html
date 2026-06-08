@@ -1354,14 +1354,15 @@ item.footer ||
 
 /* WHATSAPP */
 
+const pesan = encodeURIComponent(
+`Halo bang aku tertarik ingin membeli stok ${item.nama}`
+);
+
 document.getElementById(
 "waBtn"
 ).href =
 
-"https://wa.me/" +
-
-(item.whatsapp || "");
-
+`https://wa.me/${item.whatsapp}?text=${pesan}`;
 /* IMAGES */
 
 const images = [];
