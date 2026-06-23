@@ -916,5 +916,24 @@
     "gambar8": "https://files.catbox.moe/sjlxzu.jpg",
     "gambar9": "https://files.catbox.moe/rn1xe3.jpg",
     "gambar10": ""
+  },
+  {
+    "id": "28",
+    "nama": "Tesbot",
+    "kategori": "ml",
+    "subtitle": "Bottes",
+    "harga_baru": "1000",
+    "status": "READY",
+    "stat1_nama": "Stat1",
+    "stat1_value": " a",
+    "stat2_nama": "Stat2",
+    "stat2_value": " b",
+    "stat3_nama": "Stat3",
+    "stat3_value": " c",
+    "gambar1": "No request type given?",
+    "gambar2": "",
+    "gambar3": "",
+    "gambar4": "",
+    "gambar5": ""
   }
 ]
